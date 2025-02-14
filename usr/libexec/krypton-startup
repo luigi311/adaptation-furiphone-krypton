@@ -17,10 +17,10 @@ else
     swapon -p -3 /dev/zram0
 fi
 
-# Allow FuriOS user to access touchscreen nodes and flashlight
-[ -e "/sys/kernel/furilabs/palmrejectionmode/common_node/" ] && chown furios:furios /sys/kernel/furilabs/palmrejectionmode/common_node/*mode
-[ -e "/sys/class/flashlight/mt-flash-led1/" ] && chown furios:furios /sys/class/flashlight/mt-flash-led1/*
-[ -e "/sys/class/flashlight/mt-flash-led2/" ] && chown furios:furios /sys/class/flashlight/mt-flash-led2/*
+# Allow user to access touchscreen nodes and flashlight
+[ -e "/sys/kernel/furilabs/palmrejectionmode/common_node/" ] && chown 32011:32011 /sys/kernel/furilabs/palmrejectionmode/common_node/*mode
+[ -e "/sys/class/flashlight/mt-flash-led1/" ] && chown 32011:32011 /sys/class/flashlight/mt-flash-led1/*
+[ -e "/sys/class/flashlight/mt-flash-led2/" ] && chown 32011:32011 /sys/class/flashlight/mt-flash-led2/*
 
 # Wait for WLAN to come up
 while [ "`getprop vendor.connsys.driver.ready`" != "yes" ]; do
@@ -52,19 +52,19 @@ done
 
 chmod 666 /dev/binderfs/anbox-*
 
-chown furios:furios /dev/binderfs/anbox-*
+chown 32011:32011 /dev/binderfs/anbox-*
 
 # Wait for vibrator driver to come up and give it the right permission
 while [ ! -e /sys/class/leds/vibrator/activate ]; do
     sleep 1
 done
 
-chown furios:furios /sys/class/leds/vibrator/*
+chown 32011:32011 /sys/class/leds/vibrator/*
 
 # Allow to access brightness nodes
-[ -e "/sys/class/leds/green/" ] && chown furios:furios /sys/class/leds/green/*
-[ -e "/sys/class/flashlight_core/flashlight/" ] && chown furios:furios /sys/class/flashlight_core/flashlight/*
-[ -e "/sys/class/leds/lcd-backlight/" ] && chown furios:furios /sys/class/leds/lcd-backlight/*
+[ -e "/sys/class/leds/green/" ] && chown 32011:32011 /sys/class/leds/green/*
+[ -e "/sys/class/flashlight_core/flashlight/" ] && chown 32011:32011 /sys/class/flashlight_core/flashlight/*
+[ -e "/sys/class/leds/lcd-backlight/" ] && chown 32011:32011 /sys/class/leds/lcd-backlight/*
 
 # Disable coredumps
 sysctl -w kernel.core_pattern=|/bin/false
